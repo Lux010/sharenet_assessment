@@ -1,0 +1,28 @@
+FullStack Dev - Project
+========================
+
+
+
+Create a 2 page  Responsive Vue.JS SPA web application
+
+
+Page 1 - Create a landing page containing a table showing Spot prices using the data from the following Sharenet API call https://api.sharenet.co.za/api/v1/px2/spots
+         create table showing the latest 5 prices of each category and it must include the following columns:[FullName|Price|Move|Percentage Move|Time].
+            a) Consume the following Sharenet API end point
+                https://api.sharenet.co.za/api/v1/px2/spots
+            b) Table columns must be sortable.
+	    c) All percentage must have 2 decimal places 
+	    d) page must be mobile responsive
+	    e) all data must be passed as props
+            c) Create a Menu link to page 2 and page 3
+
+Page 2 - Display a Contact Us page - containing Sharenet address details and contact numbers and location using Google Maps. 
+           a) Provide a link back to page 1. 
+
+page 3 - Page should display different venues and workshop dates. (some dates available and some sold out). Some way to only display dates with seats available.
+	and if booked then save booked date to node js server (not localhost only live api) and data stored in mysql table
+
+(For extra bonus points, package the working app in a docker image)
+
+
+
