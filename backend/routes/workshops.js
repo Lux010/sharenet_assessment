@@ -8,20 +8,20 @@ router.get("/", async (req, res) => {
     const onlyAvailable = req.query.onlyAvailable === "true";
 
     const sql = `
-      SELECT
-        venue_id,
-        venue_name,
-        city,
-        address,
-        date_id,
-        workshop_date,
-        workshop_time,
-        seats_total,
-        seats_available
-      FROM workshop_dates
-      ${onlyAvailable ? "WHERE seats_available > 0" : ""}
-      ORDER BY venue_name ASC, workshop_date ASC, workshop_time ASC
-    `;
+    SELECT
+      venue_id,
+      venue_name,
+      city,
+      address,
+      date_id,
+      DATE_FORMAT(workshop_date, '%Y-%m-%d') AS workshop_date,
+      workshop_time,
+      seats_total,
+      seats_available
+    FROM workshop_dates
+    ${onlyAvailable ? "WHERE seats_available > 0" : ""}
+    ORDER BY venue_name ASC, workshop_date ASC, workshop_time ASC
+  `;
 
     const [rows] = await pool.execute(sql);
 

@@ -44,7 +44,7 @@ router.post("/", async (req, res) => {
 
     // Lock the workshop row so concurrent bookings queue up safely
     const [rows] = await conn.execute(
-      `SELECT date_id, seats_available
+      `SELECT date_id, workshop_date, workshop_time, seats_available
        FROM workshop_dates
        WHERE date_id = ?
        FOR UPDATE`,
@@ -76,16 +76,24 @@ router.post("/", async (req, res) => {
     );
 
     // Insert booking
+    const dbDate = rows[0].workshop_date;
+    const dbTime = rows[0].workshop_time;
+
+    const isoDate =
+      dbDate instanceof Date
+        ? dbDate.toISOString().slice(0, 10)
+        : String(dbDate).slice(0, 10);
+
     const [result] = await conn.execute(
       `INSERT INTO bookings
-        (venue_id, venue_name, date_id, workshop_date, workshop_time, first_name, last_name, email, phone)
+       (venue_id, venue_name, date_id, workshop_date, workshop_time, first_name, last_name, email, phone)
        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       [
         venueId,
         venueName,
         dateId,
-        date,
-        time,
+        isoDate,
+        dbTime,
         firstName,
         lastName,
         email,

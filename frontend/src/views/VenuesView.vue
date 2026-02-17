@@ -63,11 +63,16 @@ async function submitBooking(payload) {
     const { venue, date } = payload.booking
     const { firstName, lastName, email, phone } = payload.user
 
+    const payloadDate =
+  typeof date.date === 'string'
+    ? date.date.slice(0, 10)
+    : new Date(date.date).toISOString().slice(0, 10)
+
     const res = await api.post('/api/bookings', {
       venueId: venue.id,
       venueName: venue.name,
       dateId: date.id,
-      date: date.date,
+      date: payloadDate,
       time: date.time,
       firstName,
       lastName,
@@ -147,7 +152,6 @@ const filteredVenues = computed(() => {
   </main>
 </template>
 
-
 <style scoped>
 .page {
   width: 100%;
@@ -161,11 +165,14 @@ const filteredVenues = computed(() => {
   gap: 16px;
   margin-bottom: 18px;
 }
+
 .title {
   margin: 0;
   font-size: 26px;
   font-weight: 900;
+  letter-spacing: -0.3px;
 }
+
 .sub {
   margin: 8px 0 0;
   color: rgba(226, 232, 240, 0.65);
@@ -176,8 +183,9 @@ const filteredVenues = computed(() => {
 .controls {
   display: grid;
   gap: 10px;
-  min-width: 340px;
+  min-width: 360px;
 }
+
 .input {
   padding: 10px 12px;
   border-radius: 12px;
@@ -186,10 +194,12 @@ const filteredVenues = computed(() => {
   color: #e2e8f0;
   outline: none;
 }
+
 .input:focus {
   border-color: rgba(103, 232, 249, 0.5);
   box-shadow: 0 0 0 4px rgba(103, 232, 249, 0.08);
 }
+
 .toggle {
   display: flex;
   gap: 10px;
@@ -201,7 +211,7 @@ const filteredVenues = computed(() => {
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
   gap: 16px;
   align-items: start;
 }
@@ -210,9 +220,15 @@ const filteredVenues = computed(() => {
   .top {
     flex-direction: column;
   }
+
   .controls {
     min-width: 100%;
     width: 100%;
   }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
 }
+
 </style>
