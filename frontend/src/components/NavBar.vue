@@ -1,14 +1,16 @@
 <script setup>
 import { RouterLink } from 'vue-router'
+import logoUrl from '@/assets/sharenet_logo.png'
 </script>
 
 <template>
   <header class="header">
     <div class="wrap">
-      <div class="brand">
-        <span class="dot"></span>
-        <span>Spot Prices</span>
-      </div>
+      <RouterLink to="/" class="brand" aria-label="Go to Home">
+        <div class="logo-box">
+          <img :src="logoUrl" alt="Sharenet" class="logo" />
+        </div>
+      </RouterLink>
 
       <nav class="nav">
         <RouterLink to="/">Home</RouterLink>
@@ -43,18 +45,23 @@ import { RouterLink } from 'vue-router'
 .brand {
   display: flex;
   align-items: center;
-  gap: 10px;
-  font-weight: 800;
-  letter-spacing: 0.2px;
+  text-decoration: none;
 }
 
-.dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 999px;
-  background: var(--accent);
-  box-shadow: 0 0 0 6px rgba(56, 189, 248, 0.12);
+.logo-box {
+  background: #ffffff;         
+  padding: 6px 10px;          
+  border-radius: 8px;         
+  display: flex;
+  align-items: center;
 }
+
+.logo {
+  height: 30px;    
+  width: auto;
+  display: block;
+}
+
 
 .nav {
   display: flex;
