@@ -7,6 +7,37 @@ function isEmail(email) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(email || ""));
 }
 
+router.get("/", async (req, res) => {
+  try {
+    let limit = parseInt(req.query.limit, 10);
+    if (Number.isNaN(limit) || limit <= 0) limit = 50;
+    if (limit > 200) limit = 200;
+
+    const sql = `
+      SELECT
+        id,
+        venue_name,
+        date_id,
+        DATE_FORMAT(workshop_date, '%Y-%m-%d') AS workshop_date,
+        workshop_time,
+        first_name,
+        last_name,
+        email,
+        phone,
+        created_at
+      FROM bookings
+      ORDER BY created_at DESC
+      LIMIT ${limit}
+    `;
+
+    const [rows] = await pool.query(sql);
+    res.json({ ok: true, bookings: rows });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ ok: false, error: "Server error." });
+  }
+});
+
 router.post("/", async (req, res) => {
   const conn = await pool.getConnection();
 

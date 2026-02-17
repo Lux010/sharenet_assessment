@@ -2,6 +2,7 @@
 import { ref, onMounted } from 'vue'
 import { fetchSpotPrices } from '../api/sharenet'
 import SpotCategoryTables from '../components/SpotCategoryTables.vue'
+import SkeletonSpotTableCard from '../components/SkeletonSpotTableCard.vue'
 
 const grouped = ref([])
 const loading = ref(true)
@@ -16,7 +17,6 @@ function groupLatest5ByCategory(spots) {
     byCat.get(cat).push(s)
   }
 
-  // For each category: sort by datetime desc and take latest 5
   const result = []
   for (const [categoryName, items] of byCat.entries()) {
     const latest5 = [...items]
@@ -26,7 +26,6 @@ function groupLatest5ByCategory(spots) {
     result.push({ categoryName, spots: latest5 })
   }
 
-  // Optional: stable ordering of categories alphabetically
   result.sort((a, b) => a.categoryName.localeCompare(b.categoryName))
 
   return result
@@ -38,7 +37,6 @@ onMounted(async () => {
 
   const data = await fetchSpotPrices()
 
-  // API shape: { user: {...}, spots: [...] }
   const spots = Array.isArray(data?.spots) ? data.spots : []
 
   if (!spots.length) {
@@ -65,7 +63,7 @@ onMounted(async () => {
         <div class="pill">Data: Sharenet Spots API</div>
       </div>
 
-      <p v-if="loading" class="status">Loading...</p>
+      <SkeletonSpotTableCard v-if="loading" v-for="i in 6" :key="i" />
       <p v-else-if="error" class="status error">{{ error }}</p>
 
       <SpotCategoryTables v-else :categories="grouped" />

@@ -3,7 +3,8 @@ import { computed, onMounted, ref } from 'vue'
 import VenueCard from '../components/VenueCard.vue'
 import BookingModal from '../components/BookingModal.vue'
 import { useToast } from '../composables/useToast'
-import { api } from '../api/backend' // <-- safest import (no alias issues)
+import { api } from '../api/backend'
+import SkeletonVenueCard from '../components/SkeletonVenueCard.vue'
 
 const toast = useToast()
 
@@ -134,7 +135,9 @@ const filteredVenues = computed(() => {
       </div>
     </div>
 
-    <p v-if="loading" class="sub">Loading workshops...</p>
+    <div v-if="loading" class="grid">
+      <SkeletonVenueCard v-for="i in 6" :key="i" />
+    </div>
     <p v-else-if="error" class="sub" style="color:#fecaca">{{ error }}</p>
 
     <div v-else class="grid">
