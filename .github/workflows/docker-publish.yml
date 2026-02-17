@@ -6,6 +6,8 @@ on:
   workflow_dispatch:
 
 permissions:
+  group: docker-publish-${{ github.ref }}
+  cancel-in-progress: false
   contents: read
   packages: write
 
@@ -23,7 +25,7 @@ jobs:
           - name: frontend
             context: ./frontend
             dockerfile: ./frontend/Dockerfile
-            image: ghcr.io/Lux010/sharenet-assessment-frontend
+            image: ghcr.io/lux010/sharenet-assessment-frontend
 
     steps:
       - name: Checkout
