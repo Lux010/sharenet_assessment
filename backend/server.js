@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import bookingsRouter from "./routes/bookings.js";
 import workshopsRouter from "./routes/workshops.js";
+import { seedDatabase } from "./seed.js";
 
 dotenv.config();
 
@@ -17,6 +18,9 @@ app.use("/api/bookings", bookingsRouter);
 app.use("/api/workshops", workshopsRouter);
 
 const PORT = process.env.PORT || 3000;
+
+await seedDatabase();
+
 app.listen(PORT, () => {
   console.log(`API running on port ${PORT}`);
 });
