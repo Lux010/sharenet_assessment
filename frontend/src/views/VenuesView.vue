@@ -122,7 +122,7 @@ const filteredVenues = computed(() => {
     <div class="top">
       <div>
         <h1 class="title">Venues & Workshops</h1>
-        <p class="sub">Filter by seats available and book a date. Bookings are saved in MySQL via API.</p>
+        <p class="sub">Filter by seats available and book a date.</p>
       </div>
 
       <div class="controls">
