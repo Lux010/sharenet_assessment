@@ -6,8 +6,6 @@ on:
   workflow_dispatch:
 
 permissions:
-  group: docker-publish-${{ github.ref }}
-  cancel-in-progress: false
   contents: read
   packages: write
 
