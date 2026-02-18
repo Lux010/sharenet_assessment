@@ -21,6 +21,10 @@ const PORT = process.env.PORT || 3000;
 
 await seedDatabase();
 
+console.log("DB_HOST:", process.env.DB_HOST);
+console.log("DB_USER:", process.env.DB_USER);
+console.log("DB_NAME:", process.env.DB_NAME);
+
 app.listen(PORT, () => {
   console.log(`API running on port ${PORT}`);
 });
